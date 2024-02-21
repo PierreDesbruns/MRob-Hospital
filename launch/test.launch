@@ -1,5 +1,5 @@
 <launch>
-    <arg name="world_name" default="$(find gazebo_ros_link_attacher)/worlds/test_attacher.world" />
+    <arg name="world_name" default="$(find RobotFollowColor)/worlds/turtlebot3_house.world" />
     <arg name="has_marker" default="false" />
     <arg name="robot_description" default="robot_description"/>
 
@@ -11,6 +11,13 @@
         <arg name="gui" value="true" />
         <arg name="verbose" value="false" />
         <arg name="debug" value="false" />
+    </include>
+
+    <include file="$(find RobotFollowColor)/launch/include/robot.xml">
+        <arg name="name" value="leader" />
+        <arg name="x" value="0.8" />
+        <arg name="y" value="-1.76" />
+        <arg name="camera_on" value="true" />
     </include>
 
 </launch>

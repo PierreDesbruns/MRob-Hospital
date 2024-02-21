@@ -1,0 +1,33 @@
+<launch>
+    <arg name="name"                default="robot" />
+    <arg name="model"               default="burger" />
+
+    <arg name="x"                   default="0.0" />
+    <arg name="y"                   default="0.0" />
+    <arg name="yaw"                 default="0.0" />
+    <arg name="robot_description"   default="robot_description" />
+    <arg name="camera_on"           default="false"/>
+    <arg name="laser_visual" 	    default="false"/>
+    <arg name="robot_namespace"     default=""/>
+    <arg name="robot_model_name"    default="burger"/>
+    <arg name="enable_ekf"          default="false"/>
+
+
+    <group ns="$(arg name)">
+        <param name="tf_prefix" value="$(arg name)" />
+
+        <!-- Spawn robot model in gazebo -->
+        <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg name) -x $(arg x) -y $(arg y) -z 0.01 -Y $(arg yaw) -param $(arg robot_description) -wait ground_plane" />
+        
+        <include file="$(find RobotFollowColor)/launch/include/control.xml">
+            <arg name="laser_visual"        default="$(arg laser_visual)"/>
+            <arg name="camera_on"           default="$(arg camera_on)"/>
+            <arg name="robot_namespace"     default="$(arg robot_namespace)"/>
+            <arg name="robot_description"   default="$(arg robot_description)"/>
+            <arg name="enable_ekf"          default="$(arg enable_ekf)" />
+        </include>
+
+
+    </group>
+
+</launch>
